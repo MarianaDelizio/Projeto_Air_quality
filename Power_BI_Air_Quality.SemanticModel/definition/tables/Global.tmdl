@@ -10,12 +10,12 @@ table Global
 
 		annotation SummarizationSetBy = Automatic
 
-	column Station
+	column City
 		dataType: string
 		lineageTag: ebaaa606-bf97-4fd9-958a-f8578265326c
 		dataCategory: City
 		summarizeBy: none
-		sourceColumn: Station
+		sourceColumn: City
 
 		annotation SummarizationSetBy = Automatic
 
@@ -35,9 +35,10 @@ table Global
 				    Fonte = Excel.Workbook(File.Contents("C:\Users\marib\OneDrive\Desktop\Power_BI_AIR\Global_Air_Quality.xlsx"), null, true),
 				    Planilha1_Sheet = Fonte{[Item="Planilha1",Kind="Sheet"]}[Data],
 				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Planilha1_Sheet, [PromoteAllScalars=true]),
-				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"ID", Int64.Type}, {"Station", type text}, {"County", type text}})
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"ID", Int64.Type}, {"Station", type text}, {"County", type text}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Tipo Alterado",{{"Station", "City"}})
 				in
-				    #"Tipo Alterado"
+				    #"Colunas Renomeadas"
 
 	annotation PBI_NavigationStepName = Navegação
 

@@ -5,5 +5,5 @@ relationship 249e9b90-3184-43ed-91f8-da7dd6022d98
 
 relationship f7bff06a-220a-7699-1dcd-efde2e78079f
 	fromColumn: Air_Quality.City
-	toColumn: Global.Station
+	toColumn: Global.City
 
