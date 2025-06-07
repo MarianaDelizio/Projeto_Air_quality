@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Power_BI_Air_Quality"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f8d2efb7-55d7-4482-985e-a9727c835702"
+  }
+}

@@ -1,0 +1,160 @@
+table Air_Quality
+	lineageTag: d9fe3c59-b1b5-4734-83ce-d4a399e3f992
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fd74d5d7-5220-4214-ba51-1d5225e61f05
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 249e9b90-3184-43ed-91f8-da7dd6022d98
+			defaultHierarchy: LocalDateTable_59a952ba-45fe-42b5-8e50-9f4a9f2eb280.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column HORA
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 86c50050-c02b-4694-9aad-2018ba07e541
+		summarizeBy: none
+		sourceColumn: HORA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column City
+		dataType: string
+		lineageTag: 1671605d-03a4-4052-b46a-ad3ec63f30fd
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column CO
+		dataType: int64
+		formatString: 0
+		lineageTag: f6551aa7-983c-4f26-8857-1fa20fb9265a
+		summarizeBy: sum
+		sourceColumn: CO
+
+		annotation SummarizationSetBy = Automatic
+
+	column CO2
+		dataType: string
+		lineageTag: 4caadf10-7db0-429d-bf4a-f33fb3199c46
+		summarizeBy: none
+		sourceColumn: CO2
+
+		annotation SummarizationSetBy = Automatic
+
+	column NO2
+		dataType: double
+		lineageTag: b8e44aa6-bfb5-4081-88fd-3e7e6090b0d5
+		summarizeBy: sum
+		sourceColumn: NO2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SO2
+		dataType: double
+		lineageTag: 53d4be57-1047-44d9-8533-ebb1c85a8b17
+		summarizeBy: sum
+		sourceColumn: SO2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column O3
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b349810-544f-4b77-aee2-66f8614deca8
+		summarizeBy: sum
+		sourceColumn: O3
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PM2.5'
+		dataType: double
+		lineageTag: f6fc99bb-d58d-43d3-b6cf-d94e0d8df16b
+		summarizeBy: sum
+		sourceColumn: PM2.5
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PM10
+		dataType: double
+		lineageTag: 7f5d083a-6d5b-4aa6-ad33-d72b8bd70ff0
+		summarizeBy: sum
+		sourceColumn: PM10
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: f635523f-128d-4d5e-8ffd-20659acf0ecc
+		summarizeBy: sum
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês
+		dataType: int64
+		formatString: 0
+		lineageTag: 23153558-0c14-4dae-b5c3-10dc0e55952d
+		summarizeBy: sum
+		sourceColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia
+		dataType: int64
+		formatString: 0
+		lineageTag: ecf04c67-e47a-4585-8d12-b5cca9cb4b80
+		summarizeBy: sum
+		sourceColumn: Dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hora.1'
+		dataType: int64
+		formatString: 0
+		lineageTag: 55e5e8fa-efa8-4e2a-9697-58cf257092b3
+		summarizeBy: sum
+		sourceColumn: Hora.1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Air_Quality = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\marib\OneDrive\Desktop\Power_BI_AIR\Air_Quality.xlsx"), null, true),
+				    Air_Quality_Sheet = Fonte{[Item="Air_Quality",Kind="Sheet"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Air_Quality_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type any}, {"Column5", type text}, {"Column6", type any}, {"Column7", type any}, {"Column8", type any}, {"Column9", type any}, {"Column10", type any}}),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"Tipo Alterado", [PromoteAllScalars=true]),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"Date", type date}, {"HORA", type time}, {"City", type text}, {"CO", Int64.Type}, {"CO2", type text}, {"NO2", type number}, {"SO2", type number}, {"O3", Int64.Type}, {"PM2.5", type number}, {"PM10", type number}}),
+				    #"Ano Inserido" = Table.AddColumn(#"Tipo Alterado1", "Ano", each Date.Year([Date]), Int64.Type),
+				    #"Mês Inserido" = Table.AddColumn(#"Ano Inserido", "Mês", each Date.Month([Date]), Int64.Type),
+				    #"Dia Inserido" = Table.AddColumn(#"Mês Inserido", "Dia", each Date.Day([Date]), Int64.Type),
+				    #"Hora Inserida" = Table.AddColumn(#"Dia Inserido", "Hora.1", each Time.Hour([HORA]), Int64.Type)
+				in
+				    #"Hora Inserida"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

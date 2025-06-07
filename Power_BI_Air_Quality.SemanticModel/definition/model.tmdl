@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Global","Air_Quality"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.143.1378.0 (25.05)+4e1de9c957866bc5336e0d250838314aa54ff3a8
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Global
+ref table Air_Quality
+ref table DateTableTemplate_4f53bb62-0ec5-4813-979c-885d01744d30
+ref table LocalDateTable_59a952ba-45fe-42b5-8e50-9f4a9f2eb280
+
+ref cultureInfo en-US
+

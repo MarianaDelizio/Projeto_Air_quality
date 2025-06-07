@@ -1,0 +1,9 @@
+relationship 249e9b90-3184-43ed-91f8-da7dd6022d98
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Air_Quality.Date
+	toColumn: LocalDateTable_59a952ba-45fe-42b5-8e50-9f4a9f2eb280.Date
+
+relationship f7bff06a-220a-7699-1dcd-efde2e78079f
+	fromColumn: Air_Quality.City
+	toColumn: Global.Station
+
